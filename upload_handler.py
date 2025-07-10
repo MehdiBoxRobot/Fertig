@@ -1,11 +1,12 @@
-from pyrogram import Client, filters
+from pyrogram import filters
 from pyrogram.types import Message
 from config import ADMIN_IDS
 from database import save_file
+from pyrogram import Client
 
 upload_sessions = {}
 
-@app.on_message(filters.command("upload") & filters.user(ADMIN_IDS))
+@Client.on_message(filters.command("upload") & filters.user(ADMIN_IDS))
 async def start_upload(client: Client, message: Message):
     user_id = message.from_user.id
     upload_sessions[user_id] = {
@@ -15,7 +16,7 @@ async def start_upload(client: Client, message: Message):
     }
     await message.reply("🎬 لطفاً شناسه (Film ID) فیلم را ارسال کنید:")
 
-@app.on_message((filters.video | filters.document) & filters.user(ADMIN_IDS))
+@Client.on_message((filters.video | filters.document) & filters.user(ADMIN_IDS))
 async def handle_file(client: Client, message: Message):
     user_id = message.from_user.id
     if user_id not in upload_sessions:
@@ -32,7 +33,7 @@ async def handle_file(client: Client, message: Message):
         session["state"] = "awaiting_quality"
         await message.reply("📶 لطفاً کیفیت فایل را وارد کنید (مثلاً 720p):")
 
-@app.on_message(filters.text & filters.user(ADMIN_IDS))
+@Client.on_message(filters.text & filters.user(ADMIN_IDS))
 async def handle_text_steps(client: Client, message: Message):
     user_id = message.from_user.id
     if user_id not in upload_sessions:
@@ -58,7 +59,7 @@ async def handle_text_steps(client: Client, message: Message):
         await message.reply("📌 آیا فایل دیگری برای این فیلم دارید؟ (بله / خیر)")
 
     elif state == "awaiting_more_files":
-        if text.lower() in ["بله", "yes", "آره"]:
+        if text.lower() in ["بله", "yes", "آره", "اره"]:
             session["state"] = "awaiting_file"
             await message.reply("📁 لطفاً فایل بعدی را ارسال کنید:")
         elif text.lower() in ["خیر", "no", "نه"]:

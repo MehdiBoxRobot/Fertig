@@ -6,7 +6,8 @@ from urllib.parse import quote_plus
 
 # تنظیمات مهم
 TOKEN = "8031070707:AAEf5KDsmxL2x1_iZ_A1PgrGuqPL29TaW8A"
-ADMIN_IDS = [7872708405, 6867380442]  # آیدی ادمین‌ها
+ADMIN_IDS = list(map(int, os.getenv("ADMIN_IDS", "").split(",")))
+  # آیدی ادمین‌ها
 
 username = "smilymeh"
 password = "M@hdi1985!"

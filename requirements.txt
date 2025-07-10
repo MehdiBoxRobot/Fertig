@@ -1,11 +1,3 @@
-# توکن ربات تلگرام
-TOKEN=8031070707:AAEf5KDsmxL2x1_iZ_A1PgrGuqPL29TaW8A
-
-# آیدی ادمین‌ها (اگر چندتا هستن با کاما جدا کن)
-ADMIN_IDS=7872708405,6867380442
-
-# اطلاعات اتصال به MongoDB (با پسورد URL-encoded)
-MONGO_URI=mongodb+srv://smilymeh:M%40hdi1985%21@cluster0.ve2f0zq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 pyrogram==2.0.106
 tgcrypto
 pymongo

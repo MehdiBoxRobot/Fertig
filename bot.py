@@ -1,17 +1,27 @@
-from pyrogram import Client
-from config import API_ID, API_HASH, BOT_TOKEN
+import asyncio
+import logging
+from pyrogram import Client, filters
+from config import API_ID, API_HASH, BOT_TOKEN, ADMIN_IDS
+
+logging.basicConfig(level=logging.INFO)
+print("🔥 Bot is starting...")
 
 app = Client(
-    "BoxOfficeBot",  # اسم پروژه. مهم نیست چی باشه ولی باید ثابت بمونه
+    "BoxOfficeUploaderBot",
     api_id=API_ID,
     api_hash=API_HASH,
-    bot_token=BOT_TOKEN  # این خط باعث میشه Pyrogram وارد حالت Bot بشه
+    bot_token=BOT_TOKEN
 )
 
-@app.on_message()
-async def start_handler(client, message):
-    await message.reply("✅ ربات آنلاین و سالمه!")
+# فقط ادمین‌ها اجازه دارند فایل آپلود کنند
+@app.on_message(filters.private & filters.media & filters.user(ADMIN_IDS))
+async def handle_upload(client, message):
+    await message.reply("✅ فایل دریافت شد. ادامه‌ی مراحل اضافه خواهد شد...")
+
+# دستور ساده برای تست
+@app.on_message(filters.command("start") & filters.private)
+async def start(client, message):
+    await message.reply("سلام! ربات با موفقیت اجرا شد ✅")
 
 if __name__ == "__main__":
-    print("🔥 Bot is starting...")
     app.run()

@@ -5,7 +5,7 @@ app = Client(
     "BoxOfficeBot",
     api_id=API_ID,
     api_hash=API_HASH,
-    bot_token=BOT_TOKEN  # این خط باید اضافه شود
+    bot_token=BOT_TOKEN   # حتما اینجا مقدار توکن ربات رو بدید
 )
 
 @app.on_message()
